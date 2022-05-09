@@ -1,0 +1,84 @@
+<style>
+  body {
+    margin: 50px;
+  }
+
+  #placeordetb_body_wrap {
+    border: 1px solid gray;
+  }
+</style>
+<div
+  style="
+    overflow: hidden;
+    display: inline-block;
+    border: 0px solid rgb(136, 136, 136);
+  "
+  id="placeordetb_table_wrap"
+>
+  <div
+    style="width: 1000px; height: 200px; overflow: auto;"
+    id="placeordetb_body_wrap"
+  >
+    <table
+      class="placeorder_items"
+      id="placeordetb"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+    >
+      <tbody>
+        <tr valign="top">
+          <th>Line number</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<input type="text" name="inputName" value="" id="inputName" />
+<button onclick="addNewRow()">Add Row</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+  //START logic for scroll to last TR
+  const scrollToLastTr = () => {
+    var scrollBottom = Math.max(
+      $('#placeordetb').height() - $('#placeordetb_body_wrap').height(),
+      0,
+    )
+    $('#placeordetb_body_wrap').scrollTop(scrollBottom)
+  }
+  //END logic for scroll to last TR
+
+  $(document).ready(function () {
+    scrollToLastTr()
+  })
+
+  // START DELETE TABLE TR
+  const deleteRow = (removeTrIndex) => {
+    $(`#uniq_${removeTrIndex}`).remove()
+    scrollToLastTr()
+  }
+  // END DELETE TABLE TR
+
+  // START ADD NEW ROW
+  const addNewRow = () => {
+    const inputValue = $('#inputName').val()
+    if (inputValue === '') {
+      alert('Enter value in input')
+      return
+    }
+    $('#placeordetb').append(
+      `<tr id="uniq_${$('#placeordetb tr').length}"><td>${
+        $('#placeordetb tr').length
+      }</td><td>${inputValue}</td><td><a href="javascript:void(0)" onclick="deleteRow(${
+        $('#placeordetb tr').length
+      })">Delete</a></td></tr>`,
+    )
+    scrollToLastTr()
+    $('#inputName').val('')
+  }
+  // END ADD NEW ROW
+</script>
