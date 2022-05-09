@@ -3,7 +3,7 @@
     margin: 50px;
   }
 
-  #placeordetb_body_wrap {
+  #parent-table-div {
     border: 1px solid gray;
   }
 </style>
@@ -13,27 +13,21 @@
     display: inline-block;
     border: 0px solid rgb(136, 136, 136);
   "
-  id="placeordetb_table_wrap"
+  id="dynamic-table_table_wrap"
 >
   <div
     style="width: 1000px; height: 200px; overflow: auto;"
-    id="placeordetb_body_wrap"
+    id="parent-table-div"
   >
-    <table
-      class="placeorder_items"
-      id="placeordetb"
-      border="0"
-      cellpadding="0"
-      cellspacing="0"
-      width="100%"
-    >
-      <tbody>
-        <tr valign="top">
+    <table id="dynamic-table" width="100%">
+      <thead>
+        <tr>
           <th>Line number</th>
           <th>Notes</th>
-          <th></th>
+          <th>Action</th>
         </tr>
-      </tbody>
+      </thead>
+      <tbody></tbody>
     </table>
   </div>
 </div>
@@ -45,10 +39,10 @@
   //START logic for scroll to last TR
   const scrollToLastTr = () => {
     var scrollBottom = Math.max(
-      $('#placeordetb').height() - $('#placeordetb_body_wrap').height(),
+      $('#dynamic-table').height() - $('#parent-table-div').height(),
       0,
     )
-    $('#placeordetb_body_wrap').scrollTop(scrollBottom)
+    $('#parent-table-div').scrollTop(scrollBottom)
   }
   //END logic for scroll to last TR
 
@@ -70,11 +64,11 @@
       alert('Enter value in input')
       return
     }
-    $('#placeordetb').append(
-      `<tr id="uniq_${$('#placeordetb tr').length}"><td>${
-        $('#placeordetb tr').length
+    $('#dynamic-table tbody').append(
+      `<tr id="uniq_${$('#dynamic-table tr').length}"><td>${
+        $('#dynamic-table tr').length
       }</td><td>${inputValue}</td><td><a href="javascript:void(0)" onclick="deleteRow(${
-        $('#placeordetb tr').length
+        $('#dynamic-table tr').length
       })">Delete</a></td></tr>`,
     )
     scrollToLastTr()
